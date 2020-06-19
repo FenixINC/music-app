@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Music App</string>
+
+    <!--  Bottom navigation:  -->
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_search">Search</string>
+    <string name="bottom_nav_favourites">Favourites</string>
+
+    <!--  Headers:  -->
+    <string name="header_home">Home</string>
+    <string name="header_search">Search</string>
+    <string name="header_favorites">Favorites</string>
+    <string name="header_show_result">Show result</string>
+
+    <string name="show_result">Show result</string>
+
+    <string name="message_empty_data_swipe_refresh">There no data.\nSwipe to refresh.</string>
+
+    <string name="last_known_location">Last known location:</string>
+    <string name="gender">Gender:</string>
+    <string name="model">%1$s - %2$s</string>
+
+    <string name="hint_name">Enter name</string>
+    <string name="hint_status">Enter status</string>
+    <string name="hint_species">Enter species</string>
+    <string name="hint_type">Enter type</string>
+    <string name="hint_gender">Enter gender</string>
+
+    <!--  Arguments  -->
+    <string name="arg_name">arg_name</string>
+    <string name="arg_status">arg_status</string>
+    <string name="arg_species">arg_species</string>
+    <string name="arg_type">arg_type</string>
+    <string name="arg_gender">arg_gender</string>
+</resources>
