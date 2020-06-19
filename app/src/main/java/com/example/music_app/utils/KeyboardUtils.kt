@@ -1,4 +1,4 @@
-package com.example.rick_morty_app.utils
+package com.example.music_app.utils
 
 import android.app.Activity
 import android.content.Context
