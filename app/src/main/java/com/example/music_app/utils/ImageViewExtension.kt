@@ -10,7 +10,7 @@ const val IMAGE_CORNER_RADIUS = 16
 const val IMAGE_MARGIN = 0
 
 fun ImageView.loadImageUrl(url: String?) {
-    url.let {
+    url?.let {
         Glide.with(context)
             .load(it)
             .centerInside()
@@ -19,7 +19,7 @@ fun ImageView.loadImageUrl(url: String?) {
 }
 
 fun ImageView.loadImageUrlWithLeftRoundedCorners(url: String?) {
-    url.let {
+    url?.let {
         Glide.with(context)
             .load(Uri.parse(it))
             .apply(
