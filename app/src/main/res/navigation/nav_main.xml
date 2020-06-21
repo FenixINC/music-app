@@ -8,21 +8,21 @@
     <!--  HomeFragment  -->
     <fragment
         android:id="@+id/home_fragment"
-        android:name=""
+        android:name="com.example.music_app.presentation.fragment.HomeFragment"
         android:label="@string/header_home"
         tools:layout="@layout/fragment_home" />
 
     <!--  SearchFragment  -->
     <fragment
         android:id="@+id/search_fragment"
-        android:name=""
+        android:name="com.example.music_app.presentation.fragment.SearchFragment"
         android:label="@string/header_search"
-        tools:layout="@layout/fragment_search"/>
+        tools:layout="@layout/fragment_search" />
 
     <!--  FavouriteFragment  -->
     <fragment
         android:id="@+id/favourite_fragment"
-        android:name=""
+        android:name="com.example.music_app.presentation.fragment.FavoriteFragment"
         android:label="@string/header_favorites"
-        tools:layout="@layout/fragment_favourite" />
+        tools:layout="@layout/fragment_favorite" />
 </navigation>

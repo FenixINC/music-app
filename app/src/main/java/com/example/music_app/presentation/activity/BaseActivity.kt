@@ -28,7 +28,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         val view = findViewById<View>(fragmentHostId)
-        if (view is BaseFragment<*>) {
+        if (view is BaseFragment/*<*>*/) {
             view.onBackPressed()
         }
     }

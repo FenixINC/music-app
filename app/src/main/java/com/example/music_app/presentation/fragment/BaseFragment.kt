@@ -18,9 +18,9 @@ import com.example.music_app.R
 import com.example.music_app.presentation.viewmodel.BaseViewModel
 import com.example.music_app.utils.createProgressBar
 
-abstract class BaseFragment<VM : BaseViewModel> : Fragment(), LifecycleOwner {
+abstract class BaseFragment/*<VM : BaseViewModel>*/ : Fragment(), LifecycleOwner {
 
-    protected abstract val viewModel: VM
+//    protected abstract val viewModel: VM
 
     protected var progressDialog: AlertDialog? = null
 
