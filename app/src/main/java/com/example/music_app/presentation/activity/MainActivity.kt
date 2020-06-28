@@ -1,17 +1,21 @@
 package com.example.music_app.presentation.activity
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.music_app.R
+import com.example.music_app.presentation.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
+
+    private val mainViewModel by viewModels<MainViewModel>()
 
     override fun getLayoutRes() = R.layout.activity_main
 
