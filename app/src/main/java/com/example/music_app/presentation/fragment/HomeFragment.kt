@@ -5,24 +5,36 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.music_app.R
+import com.example.music_app.core.MediaPlayerCore
+import com.example.music_app.core.NotificationCore
+import com.example.music_app.core.utils.showSimpleErrorDialog
+import com.example.music_app.presentation.adapter.SongAdapter
 import com.example.music_app.presentation.constant.Constants
-import com.example.music_app.presentation.core.NotificationCore
-import com.example.music_app.presentation.listener.TrackListener
-import com.example.music_app.presentation.model.Action
+import com.example.music_app.core.model.Action
+import com.example.music_app.presentation.model.SongModel
 import com.example.music_app.presentation.service.NotificationService
 import com.example.music_app.presentation.viewmodel.HomeViewModel
 import com.example.music_app.presentation.viewmodel.hiltNavViewModels
-import com.example.music_app.utils.showSimpleErrorDialog
+import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment(), TrackListener {
+class HomeFragment : BaseFragment() {
+
+    private lateinit var songAdapter: SongAdapter
 
     @Inject
     lateinit var notificationCore: NotificationCore
+
+    @Inject
+    lateinit var mediaPlayerCore: MediaPlayerCore
+
+    @Inject
+    lateinit var storage: FirebaseStorage
 
     private val homeViewModel by hiltNavViewModels<HomeViewModel>()
 
@@ -32,34 +44,29 @@ class HomeFragment : BaseFragment(), TrackListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        observeData()
         loadData()
+        observeData()
+        setupAdapter()
         startNotificationService()
-
-        btn_play.setOnClickListener {
-            if (homeViewModel.isPlayLiveData.value == true) {
-                onPauseClick()
-            } else {
-                onPlayClick()
-            }
-        }
     }
 
     private fun loadData() {
-        homeViewModel.loadTrackList()
+        homeViewModel.loadSongListFirebase()
     }
 
     private fun observeData() {
+        homeViewModel.errorMessageLiveData.observe(viewLifecycleOwner, Observer { errorMessage ->
+            showSimpleErrorDialog(
+                context = context,
+                title = "Error",
+                message = errorMessage
+            )
+        })
         homeViewModel.loadingLiveData.observe(viewLifecycleOwner, Observer { isLoading ->
             setLoadingState(isLoading)
         })
-        homeViewModel.trackLiveData.observe(viewLifecycleOwner, Observer { data ->
-            val response = data
-            // homeAdapter.setList(data)
-        })
-        homeViewModel.errorMessageLiveData.observe(viewLifecycleOwner, Observer { errorMessage ->
-            showSimpleErrorDialog(context = context, title = "Error", message = errorMessage)
+        homeViewModel.songListLiveData.observe(viewLifecycleOwner, Observer { data ->
+            songAdapter.songList = data.toMutableList()
         })
         homeViewModel.positionLiveData.observe(viewLifecycleOwner, Observer { position ->
             this.position = position
@@ -67,20 +74,36 @@ class HomeFragment : BaseFragment(), TrackListener {
         homeViewModel.actionLiveData.observe(viewLifecycleOwner, Observer { action ->
             when (action) {
                 Action.ACTION_PREVIOUS.value -> {
-                    onPreviousClick()
+                    onPreviousSong(homeViewModel.songLiveData.value!!)
                 }
                 Action.ACTION_NEXT.value -> {
-                    onNextClick()
+                    onNextSong(homeViewModel.songLiveData.value!!)
                 }
                 Action.ACTION_PLAY.value -> {
                     if (homeViewModel.isPlayLiveData.value == true) {
-                        onPauseClick()
+                        onPauseSong(homeViewModel.songLiveData.value!!)
+                        mediaPlayerCore.pauseMediaPlayer()
                     } else {
-                        onPlayClick()
+                        onPlaySong(homeViewModel.songLiveData.value!!)
+                        mediaPlayerCore.createMediaPlayer(
+                            requireContext(),
+                            homeViewModel.songLiveData.value?.songUrl!!
+                        )
                     }
                 }
             }
         })
+    }
+
+    private fun setupAdapter() {
+        songAdapter = SongAdapter(
+            onPlayClick = { onPlaySong(it) },
+            onPauseClick = { onPauseSong(it) },
+            onNextClick = { onNextSong(it) },
+            onPreviousClick = { onPreviousSong(it) }
+        )
+        recycler_view.layoutManager = LinearLayoutManager(activity)
+        recycler_view.adapter = songAdapter
     }
 
     private fun startNotificationService() {
@@ -99,47 +122,56 @@ class HomeFragment : BaseFragment(), TrackListener {
         }
     }
 
-    override fun onPlayClick() {
+    private fun onPlaySong(songModel: SongModel) {
+        homeViewModel.setSong(songModel = songModel)
         notificationCore.createNotification(
             context = requireContext(),
-            track = homeViewModel.trackLiveData.value?.get(position!!)!!,
+            songModel = homeViewModel.songListLiveData.value?.get(position!!)!!,
             drawableActionButton = R.drawable.ic_pause,
             position = position!!,
-            size = homeViewModel.trackLiveData.value?.size!! - 1
+            size = homeViewModel.songListLiveData.value?.size!! - 1
         )
         homeViewModel.setIsPlay(isPlay = true)
+        mediaPlayerCore.createMediaPlayer(
+            requireContext(),
+            songModel.songUrl!!
+        )
     }
 
-    override fun onPauseClick() {
+    private fun onPauseSong(songModel: SongModel) {
+        homeViewModel.setSong(songModel = songModel)
         notificationCore.createNotification(
             context = requireContext(),
-            track = homeViewModel.trackLiveData.value?.get(position!!)!!,
+            songModel = homeViewModel.songListLiveData.value?.get(position!!)!!,
             drawableActionButton = R.drawable.ic_play,
             position = position!!,
-            size = homeViewModel.trackLiveData.value?.size!! - 1
+            size = homeViewModel.songListLiveData.value?.size!! - 1
         )
         homeViewModel.setIsPlay(isPlay = false)
+        mediaPlayerCore.pauseMediaPlayer()
     }
 
-    override fun onNextClick() {
+    private fun onNextSong(songModel: SongModel) {
+        homeViewModel.setSong(songModel = songModel)
         homeViewModel.setPosition(position!! + 1)
         notificationCore.createNotification(
             context = requireContext(),
-            track = homeViewModel.trackLiveData.value?.get(position!!)!!,
+            songModel = homeViewModel.songListLiveData.value?.get(position!!)!!,
             drawableActionButton = R.drawable.ic_pause,
             position = position!!,
-            size = homeViewModel.trackLiveData.value?.size!! - 1
+            size = homeViewModel.songListLiveData.value?.size!! - 1
         )
     }
 
-    override fun onPreviousClick() {
+    private fun onPreviousSong(songModel: SongModel) {
+        homeViewModel.setSong(songModel = songModel)
         homeViewModel.setPosition(position!! - 1)
         notificationCore.createNotification(
             context = requireContext(),
-            track = homeViewModel.trackLiveData.value?.get(position!!)!!,
+            songModel = homeViewModel.songListLiveData.value?.get(position!!)!!,
             drawableActionButton = R.drawable.ic_pause,
             position = position!!,
-            size = homeViewModel.trackLiveData.value?.size!! - 1
+            size = homeViewModel.songListLiveData.value?.size!! - 1
         )
     }
 
@@ -149,5 +181,6 @@ class HomeFragment : BaseFragment(), TrackListener {
             notificationCore.cancelAllNotifications()
         }
         requireActivity().unregisterReceiver(homeViewModel.broadcastReceiver)
+        mediaPlayerCore.stopMediaPlayer()
     }
 }

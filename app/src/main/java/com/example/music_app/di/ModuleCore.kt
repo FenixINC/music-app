@@ -1,7 +1,8 @@
 package com.example.music_app.di
 
 import android.app.Notification
-import com.example.music_app.presentation.core.NotificationCore
+import com.example.music_app.core.MediaPlayerCore
+import com.example.music_app.core.NotificationCore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,4 +19,8 @@ object ModuleCore {
     @Provides
     @Singleton
     fun provideNotificationCore(notification: Notification) = NotificationCore(notification)
+
+    @Provides
+    @Singleton
+    fun provideMediaPlayerCore() = MediaPlayerCore()
 }

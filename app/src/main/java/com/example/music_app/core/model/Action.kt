@@ -1,4 +1,4 @@
-package com.example.music_app.presentation.model
+package com.example.music_app.core.model
 
 enum class Action(val value: String) {
     ACTION_PLAY("action_play"),

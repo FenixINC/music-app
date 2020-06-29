@@ -1,4 +1,4 @@
-package com.example.music_app.utils
+package com.example.music_app.core.utils
 
 import android.net.Uri
 import android.widget.ImageView

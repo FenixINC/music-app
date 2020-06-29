@@ -1,4 +1,4 @@
-package com.example.music_app.presentation.core
+package com.example.music_app.core
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -13,8 +13,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.music_app.R
 import com.example.music_app.presentation.constant.Constants
-import com.example.music_app.presentation.model.Action
-import com.example.music_app.presentation.model.Track
+import com.example.music_app.core.model.Action
+import com.example.music_app.presentation.model.SongModel
 import com.example.music_app.presentation.receiver.NotificationBroadcastReceiver
 import javax.inject.Inject
 
@@ -27,19 +27,21 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
         private const val NEXT = "Next"
         private const val PREVIOUS = "Previous"
         private const val NOTIFICATION_ID = 1
+
+        private var TAG = NotificationCore::class.java.simpleName
     }
 
     fun createNotification(
         context: Context,
-        track: Track,
+        songModel: SongModel,
         drawableActionButton: Int,
         position: Int,
         size: Int
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManagerCompat = NotificationManagerCompat.from(context)
-            val mediaSessionCompat = MediaSessionCompat(context, "tag")
-            val icon = track.image?.let { BitmapFactory.decodeResource(context.resources, it) }
+            val mediaSessionCompat = MediaSessionCompat(context, TAG)
+            val icon = songModel.image?.let { BitmapFactory.decodeResource(context.resources, it) }
 
             // Action Play
             val intentPlay = Intent(
@@ -92,8 +94,8 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
 
             notification = NotificationCompat.Builder(context, Constants.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_music_note)
-                .setContentTitle(track.title)
-                .setContentText(track.artist)
+                .setContentTitle(songModel.name)
+                .setContentText(songModel.artist)
                 .setLargeIcon(icon)
                 .setOnlyAlertOnce(true) //show notification for only first time
                 .setShowWhen(false)

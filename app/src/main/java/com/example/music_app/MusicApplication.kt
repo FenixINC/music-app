@@ -1,4 +1,4 @@
-package com.example.music_app.presentation
+package com.example.music_app
 
 import android.app.Application
 import com.facebook.stetho.Stetho

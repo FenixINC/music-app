@@ -7,7 +7,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.example.music_app.data.repository.HomeRepository
 import com.example.music_app.presentation.constant.Constants
-import com.example.music_app.presentation.model.Track
+import com.example.music_app.presentation.mapper.mapResponseToModel
+import com.example.music_app.presentation.model.SongModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -21,13 +22,18 @@ class HomeViewModel @ViewModelInject constructor(
         private const val POSITION_DEFAULT = 0
     }
 
-    val trackLiveData = MutableLiveData<List<Track>>()
+    val songListLiveData = MutableLiveData<List<SongModel>>()
+    val songLiveData = MutableLiveData<SongModel>()
     val isPlayLiveData = MutableLiveData<Boolean>()
     val actionLiveData = MutableLiveData<String>()
     val positionLiveData = MutableLiveData<Int>()
 
     init {
         positionLiveData.value = POSITION_DEFAULT
+    }
+
+    fun setSong(songModel: SongModel) {
+        songLiveData.value = songModel
     }
 
     fun setIsPlay(isPlay: Boolean) {
@@ -38,11 +44,11 @@ class HomeViewModel @ViewModelInject constructor(
         positionLiveData.value = position
     }
 
-    fun loadTrackList() = CoroutineScope(Dispatchers.IO).launch {
+    fun loadSongListFirebase() = CoroutineScope(Dispatchers.IO).launch {
         try {
             loadingLiveData.postValue(true)
-            homeRepository.loadTrackListNetwork().collect { data ->
-                trackLiveData.postValue(data)
+            homeRepository.loadSongListFirebase().collect { data ->
+                songListLiveData.postValue(mapResponseToModel(data))
             }
         } catch (e: Exception) {
             errorMessageLiveData.postValue(e.message)
@@ -51,6 +57,7 @@ class HomeViewModel @ViewModelInject constructor(
         }
     }
 
+    //TODO: move to BroadcastReceiverCore
     val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             actionLiveData.value = intent?.extras?.getString(Constants.ACTION_TRACK)

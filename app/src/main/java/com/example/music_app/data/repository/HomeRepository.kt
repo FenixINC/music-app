@@ -1,23 +1,23 @@
 package com.example.music_app.data.repository
 
-import com.example.music_app.R
-import com.example.music_app.presentation.model.Track
-import kotlinx.coroutines.delay
+import com.example.music_app.data.network.response.SongResponse
+import com.example.music_app.presentation.constant.Constants
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class HomeRepository @Inject constructor() {
+class HomeRepository @Inject constructor(private val firestoreDb: FirebaseFirestore) {
 
-    suspend fun loadTrackListNetwork() = flow {
-        // TODO: change to real network request
-        delay(1000)
-        emit(
-            arrayListOf(
-                Track("title_1", "artist_1", R.drawable.t1),
-                Track("title_2", "artist_2", R.drawable.t2),
-                Track("title_3", "artist_3", R.drawable.t3),
-                Track("title_4", "artist_4", R.drawable.t4)
-            )
-        )
+    suspend fun loadSongListFirebase(): Flow<List<SongResponse>> {
+        val request = firestoreDb
+            .collection(Constants.COLLECTION_SONGS)
+            .get()
+
+        return flow {
+            val response = request.await().toObjects(SongResponse::class.java)
+            emit(value = response)
+        }
     }
 }

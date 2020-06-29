@@ -21,6 +21,9 @@ buildscript {
 
         // Dagger-Hilt
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+
+        // Google Services
+        classpath 'com.google.gms:google-services:4.3.3'
     }
 }
 
