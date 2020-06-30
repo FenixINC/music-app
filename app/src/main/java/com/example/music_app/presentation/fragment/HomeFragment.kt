@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.music_app.R
 import com.example.music_app.core.MediaPlayerCore
 import com.example.music_app.core.NotificationCore
+import com.example.music_app.core.model.Action
 import com.example.music_app.core.utils.showSimpleErrorDialog
 import com.example.music_app.presentation.adapter.SongAdapter
 import com.example.music_app.presentation.constant.Constants
-import com.example.music_app.core.model.Action
 import com.example.music_app.presentation.model.SongModel
 import com.example.music_app.presentation.service.NotificationService
 import com.example.music_app.presentation.viewmodel.HomeViewModel
@@ -37,8 +37,6 @@ class HomeFragment : BaseFragment() {
     lateinit var storage: FirebaseStorage
 
     private val homeViewModel by hiltNavViewModels<HomeViewModel>()
-
-    private var position: Int? = null
 
     override fun getLayoutRes() = R.layout.fragment_home
 
@@ -68,8 +66,8 @@ class HomeFragment : BaseFragment() {
         homeViewModel.songListLiveData.observe(viewLifecycleOwner, Observer { data ->
             songAdapter.songList = data.toMutableList()
         })
-        homeViewModel.positionLiveData.observe(viewLifecycleOwner, Observer { position ->
-            this.position = position
+        homeViewModel.actionPositionLiveData.observe(viewLifecycleOwner, Observer { position ->
+            homeViewModel.positionAction = position
         })
         homeViewModel.actionLiveData.observe(viewLifecycleOwner, Observer { action ->
             when (action) {
@@ -86,8 +84,8 @@ class HomeFragment : BaseFragment() {
                     } else {
                         onPlaySong(homeViewModel.songLiveData.value!!)
                         mediaPlayerCore.createMediaPlayer(
-                            requireContext(),
-                            homeViewModel.songLiveData.value?.songUrl!!
+                            homeViewModel.songLiveData.value?.songUrl!!,
+                            homeViewModel.completionListener
                         )
                     }
                 }
@@ -126,15 +124,15 @@ class HomeFragment : BaseFragment() {
         homeViewModel.setSong(songModel = songModel)
         notificationCore.createNotification(
             context = requireContext(),
-            songModel = homeViewModel.songListLiveData.value?.get(position!!)!!,
+            songModel = homeViewModel.songListLiveData.value?.get(homeViewModel.positionAction)!!,
             drawableActionButton = R.drawable.ic_pause,
-            position = position!!,
+            actionPosition = homeViewModel.positionAction,
             size = homeViewModel.songListLiveData.value?.size!! - 1
         )
         homeViewModel.setIsPlay(isPlay = true)
         mediaPlayerCore.createMediaPlayer(
-            requireContext(),
-            songModel.songUrl!!
+            songModel.songUrl!!,
+            homeViewModel.completionListener
         )
     }
 
@@ -142,9 +140,9 @@ class HomeFragment : BaseFragment() {
         homeViewModel.setSong(songModel = songModel)
         notificationCore.createNotification(
             context = requireContext(),
-            songModel = homeViewModel.songListLiveData.value?.get(position!!)!!,
+            songModel = homeViewModel.songListLiveData.value?.get(homeViewModel.positionAction)!!,
             drawableActionButton = R.drawable.ic_play,
-            position = position!!,
+            actionPosition = homeViewModel.positionAction,
             size = homeViewModel.songListLiveData.value?.size!! - 1
         )
         homeViewModel.setIsPlay(isPlay = false)
@@ -153,24 +151,24 @@ class HomeFragment : BaseFragment() {
 
     private fun onNextSong(songModel: SongModel) {
         homeViewModel.setSong(songModel = songModel)
-        homeViewModel.setPosition(position!! + 1)
+        homeViewModel.setActionPosition(homeViewModel.positionAction + 1)
         notificationCore.createNotification(
             context = requireContext(),
-            songModel = homeViewModel.songListLiveData.value?.get(position!!)!!,
+            songModel = homeViewModel.songListLiveData.value?.get(homeViewModel.positionAction)!!,
             drawableActionButton = R.drawable.ic_pause,
-            position = position!!,
+            actionPosition = homeViewModel.positionAction,
             size = homeViewModel.songListLiveData.value?.size!! - 1
         )
     }
 
     private fun onPreviousSong(songModel: SongModel) {
         homeViewModel.setSong(songModel = songModel)
-        homeViewModel.setPosition(position!! - 1)
+        homeViewModel.setActionPosition(homeViewModel.positionAction - 1)
         notificationCore.createNotification(
             context = requireContext(),
-            songModel = homeViewModel.songListLiveData.value?.get(position!!)!!,
+            songModel = homeViewModel.songListLiveData.value?.get(homeViewModel.positionAction)!!,
             drawableActionButton = R.drawable.ic_pause,
-            position = position!!,
+            actionPosition = homeViewModel.positionAction,
             size = homeViewModel.songListLiveData.value?.size!! - 1
         )
     }
@@ -182,5 +180,10 @@ class HomeFragment : BaseFragment() {
         }
         requireActivity().unregisterReceiver(homeViewModel.broadcastReceiver)
         mediaPlayerCore.stopMediaPlayer()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        activity?.finish()
     }
 }

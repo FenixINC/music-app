@@ -3,6 +3,7 @@ package com.example.music_app.presentation.viewmodel
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.example.music_app.data.repository.HomeRepository
@@ -26,10 +27,12 @@ class HomeViewModel @ViewModelInject constructor(
     val songLiveData = MutableLiveData<SongModel>()
     val isPlayLiveData = MutableLiveData<Boolean>()
     val actionLiveData = MutableLiveData<String>()
-    val positionLiveData = MutableLiveData<Int>()
+    val actionPositionLiveData = MutableLiveData<Int>()
+
+    var positionAction = POSITION_DEFAULT
 
     init {
-        positionLiveData.value = POSITION_DEFAULT
+        actionPositionLiveData.value = POSITION_DEFAULT
     }
 
     fun setSong(songModel: SongModel) {
@@ -40,8 +43,8 @@ class HomeViewModel @ViewModelInject constructor(
         isPlayLiveData.value = isPlay
     }
 
-    fun setPosition(position: Int) {
-        positionLiveData.value = position
+    fun setActionPosition(position: Int) {
+        actionPositionLiveData.value = position
     }
 
     fun loadSongListFirebase() = CoroutineScope(Dispatchers.IO).launch {
@@ -62,5 +65,10 @@ class HomeViewModel @ViewModelInject constructor(
         override fun onReceive(context: Context?, intent: Intent?) {
             actionLiveData.value = intent?.extras?.getString(Constants.ACTION_TRACK)
         }
+    }
+
+    val completionListener = MediaPlayer.OnCompletionListener {
+//        setIsPlay(false)
+//        actionLiveData.value = Action.ACTION_PLAY.value
     }
 }
