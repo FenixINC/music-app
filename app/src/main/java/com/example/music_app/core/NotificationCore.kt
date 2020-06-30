@@ -6,21 +6,29 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.music_app.R
-import com.example.music_app.presentation.constant.Constants
 import com.example.music_app.core.model.Action
+import com.example.music_app.presentation.constant.Constants
 import com.example.music_app.presentation.model.SongModel
 import com.example.music_app.presentation.receiver.NotificationBroadcastReceiver
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import java.io.IOException
+import java.net.URL
 import javax.inject.Inject
 
 class NotificationCore @Inject constructor(private var notification: Notification) {
 
     private lateinit var notificationManager: NotificationManager
+
+    private var largeIcon: Bitmap? = null
 
     companion object {
         private const val PLAY = "Play"
@@ -35,13 +43,14 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
         context: Context,
         songModel: SongModel,
         drawableActionButton: Int,
-        position: Int,
+        actionPosition: Int,
         size: Int
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManagerCompat = NotificationManagerCompat.from(context)
             val mediaSessionCompat = MediaSessionCompat(context, TAG)
-            val icon = songModel.image?.let { BitmapFactory.decodeResource(context.resources, it) }
+
+            loadIconFromFirebase(songModel.imageUrl)
 
             // Action Play
             val intentPlay = Intent(
@@ -59,7 +68,7 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
             // Action Previous
             val pendingIntentPrevious: PendingIntent?
             val actionPrevious: Int
-            if (position == 0) {
+            if (actionPosition == 0) {
                 pendingIntentPrevious = null
                 actionPrevious = 0
             } else {
@@ -77,7 +86,7 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
             // Action Next
             val pendingIntentNext: PendingIntent?
             val actionNext: Int
-            if (position == size) {
+            if (actionPosition == size) {
                 pendingIntentNext = null
                 actionNext = 0
             } else {
@@ -96,7 +105,7 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
                 .setSmallIcon(R.drawable.ic_music_note)
                 .setContentTitle(songModel.name)
                 .setContentText(songModel.artist)
-                .setLargeIcon(icon)
+                .setLargeIcon(largeIcon)
                 .setOnlyAlertOnce(true) //show notification for only first time
                 .setShowWhen(false)
                 .addAction(actionPrevious, PREVIOUS, pendingIntentPrevious)
@@ -131,5 +140,17 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
 
     fun cancelAllNotifications() {
         notificationManager.cancelAll()
+    }
+
+    private fun loadIconFromFirebase(imageUrl: String?) = runBlocking {
+        withContext(Dispatchers.IO) {
+            try {
+                val url = URL(imageUrl)
+                val input = url.openStream()
+                largeIcon = BitmapFactory.decodeStream(input)
+            } catch (e: IOException) {
+                val result = e
+            }
+        }
     }
 }
