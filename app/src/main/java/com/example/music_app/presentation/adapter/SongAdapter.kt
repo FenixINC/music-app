@@ -3,14 +3,12 @@ package com.example.music_app.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.music_app.core.model.Action
 import com.example.music_app.databinding.ListItemSongBinding
 import com.example.music_app.presentation.model.SongModel
 
 class SongAdapter(
-    private val onPreviousClick: (SongModel) -> Unit,
-    private val onPlayClick: (SongModel) -> Unit,
-    private val onPauseClick: (SongModel) -> Unit,
-    private val onNextClick: (SongModel) -> Unit
+    private val clickListener: (SongModel, String) -> Unit
 ) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
 
     var songList = mutableListOf<SongModel>()
@@ -43,13 +41,7 @@ class SongAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(
-            songModel = songList[position],
-            playListener = onPlayClick,
-            pauseListener = onPauseClick,
-            nextListener = onNextClick,
-            previousListener = onPreviousClick
-        )
+        holder.bind(songModel = songList[position], clickListener = clickListener)
     }
 
     class ViewHolder(private val binding: ListItemSongBinding) :
@@ -57,13 +49,10 @@ class SongAdapter(
 
         fun bind(
             songModel: SongModel,
-            playListener: (SongModel) -> Unit,
-            pauseListener: (SongModel) -> Unit,
-            nextListener: (SongModel) -> Unit,
-            previousListener: (SongModel) -> Unit
+            clickListener: (SongModel, String) -> Unit
         ) = with(binding) {
             model = songModel
-            icPlay.setOnClickListener { playListener(songModel) }
+            icPlay.setOnClickListener { clickListener(songModel, Action.ACTION_PLAY.value) }
         }
     }
 }

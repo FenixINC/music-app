@@ -94,12 +94,9 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupAdapter() {
-        songAdapter = SongAdapter(
-            onPlayClick = { onPlaySong(it) },
-            onPauseClick = { onPauseSong(it) },
-            onNextClick = { onNextSong(it) },
-            onPreviousClick = { onPreviousSong(it) }
-        )
+        songAdapter = SongAdapter(clickListener = { songModel: SongModel, action: String ->
+            onClickListener(songModel, action)
+        })
         recycler_view.layoutManager = LinearLayoutManager(activity)
         recycler_view.adapter = songAdapter
     }
@@ -117,6 +114,23 @@ class HomeFragment : BaseFragment() {
                     NotificationService::class.java
                 )
             )
+        }
+    }
+
+    private fun onClickListener(songModel: SongModel, action: String) {
+        when (action) {
+            Action.ACTION_PLAY.value -> {
+                onPlaySong(songModel)
+            }
+            Action.ACTION_PAUSE.value -> {
+                onPauseSong(songModel)
+            }
+            Action.ACTION_NEXT.value -> {
+                onNextSong(songModel)
+            }
+            Action.ACTION_PREVIOUS.value -> {
+                onPreviousSong(songModel)
+            }
         }
     }
 
