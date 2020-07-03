@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/notification_height"
+    android:background="@color/half_black"
+    android:padding="@dimen/spacing_half">
+
+    <ImageView
+        android:id="@+id/notification_song_image"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        tools:scaleType="center"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/notification_song_name"
+        style="@style/StyleNotificationTextHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_quarter"
+        android:layout_marginEnd="@dimen/spacing_quarter"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@id/notification_ic_previous"
+        app:layout_constraintStart_toEndOf="@id/notification_song_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Whiteout" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/notification_song_artist"
+        style="@style/StyleNotificationTextDefault"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_quarter"
+        android:layout_marginEnd="@dimen/spacing_quarter"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@id/notification_ic_previous"
+        app:layout_constraintStart_toEndOf="@id/notification_song_image"
+        app:layout_constraintTop_toBottomOf="@id/notification_song_name"
+        tools:text="Warpaint" />
+
+    <ImageView
+        android:id="@+id/notification_ic_previous"
+        android:layout_width="@dimen/image_size_small"
+        android:layout_height="@dimen/image_size_small"
+        android:src="@drawable/ic_play_previous"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/notification_ic_play"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/notification_ic_play"
+        android:layout_width="@dimen/image_size_small"
+        android:layout_height="@dimen/image_size_small"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/notification_ic_next"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/ic_play" />
+
+    <ImageView
+        android:id="@+id/notification_ic_next"
+        android:layout_width="@dimen/image_size_small"
+        android:layout_height="@dimen/image_size_small"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/ic_play_next"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,18 +10,23 @@
     <dimen name="spacing_big">24dp</dimen>
     <dimen name="spacing_double">32dp</dimen>
 
-    <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_very_small">10sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_default">14sp</dimen>
     <dimen name="text_error_view_title">15sp</dimen>
-    <dimen name="text_size_18sp">18sp</dimen>
-    <dimen name="text_size_22sp">22sp</dimen>
+    <dimen name="text_size_header_default">18sp</dimen>
+    <dimen name="text_size_header_big">22sp</dimen>
     <dimen name="text_size_title">34sp</dimen>
     <dimen name="text_size_options_item">22sp</dimen>
 
-    <dimen name="image_size_250dp">250dp</dimen>
+    <dimen name="image_size_big">150dp</dimen>
     <dimen name="image_size_default">48dp</dimen>
+    <dimen name="image_size_small">36dp</dimen>
     <dimen name="image_size_item_character">130dp</dimen>
 
     <dimen name="corner_default">16dp</dimen>
+
+    <dimen name="notification_height">64dp</dimen>
+
+    <integer name="shadow_radius">1</integer>
 </resources>

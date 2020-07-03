@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@color/half_black"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/notification_song_image"
+        android:layout_width="@dimen/image_size_big"
+        android:layout_height="@dimen/image_size_big"
+        tools:ignore="ContentDescription"
+        tools:scaleType="center"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/notification_song_name"
+            style="@style/StyleNotificationTextHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_quarter"
+            android:layout_marginTop="@dimen/spacing_middle"
+            android:layout_marginEnd="@dimen/spacing_quarter"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="@dimen/spacing_half"
+            android:paddingEnd="@dimen/spacing_half"
+            tools:text="Whiteout" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/notification_song_artist"
+            style="@style/StyleNotificationTextDefault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_quarter"
+            android:layout_marginEnd="@dimen/spacing_quarter"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="@dimen/spacing_half"
+            android:paddingEnd="@dimen/spacing_half"
+            tools:text="Warpaint" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_default"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/notification_ic_previous"
+                android:layout_width="@dimen/image_size_small"
+                android:layout_height="@dimen/image_size_small"
+                android:layout_marginStart="@dimen/spacing_default"
+                android:layout_marginEnd="@dimen/spacing_half"
+                android:layout_weight="1"
+                android:src="@drawable/ic_play_previous"
+                android:tint="@color/white"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/notification_ic_play"
+                android:layout_width="@dimen/image_size_small"
+                android:layout_height="@dimen/image_size_small"
+                android:layout_marginStart="@dimen/spacing_half"
+                android:layout_marginEnd="@dimen/spacing_half"
+                android:layout_weight="1"
+                android:tint="@color/white"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/ic_play" />
+
+            <ImageView
+                android:id="@+id/notification_ic_next"
+                android:layout_width="@dimen/image_size_small"
+                android:layout_height="@dimen/image_size_small"
+                android:layout_marginStart="@dimen/spacing_half"
+                android:layout_marginEnd="@dimen/spacing_default"
+                android:layout_weight="1"
+                android:src="@drawable/ic_play_next"
+                android:tint="@color/white"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
