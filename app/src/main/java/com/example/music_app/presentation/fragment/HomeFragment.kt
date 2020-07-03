@@ -14,7 +14,7 @@ import com.example.music_app.core.utils.showSimpleErrorDialog
 import com.example.music_app.presentation.adapter.SongAdapter
 import com.example.music_app.presentation.constant.Constants
 import com.example.music_app.presentation.model.SongModel
-import com.example.music_app.presentation.service.NotificationService
+import com.example.music_app.service.NotificationService
 import com.example.music_app.presentation.viewmodel.HomeViewModel
 import com.example.music_app.presentation.viewmodel.hiltNavViewModels
 import com.google.firebase.storage.FirebaseStorage

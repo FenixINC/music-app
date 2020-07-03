@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".presentation.receiver.NotificationBroadcastReceiver" />
+        <receiver android:name="com.example.music_app.receiver.NotificationBroadcastReceiver" />
 
-        <service android:name=".presentation.service.NotificationService" />
+        <service android:name="com.example.music_app.service.NotificationService" />
     </application>
 </manifest>

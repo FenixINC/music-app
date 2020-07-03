@@ -16,7 +16,7 @@ import com.example.music_app.R
 import com.example.music_app.core.model.Action
 import com.example.music_app.presentation.constant.Constants
 import com.example.music_app.presentation.model.SongModel
-import com.example.music_app.presentation.receiver.NotificationBroadcastReceiver
+import com.example.music_app.receiver.NotificationBroadcastReceiver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext

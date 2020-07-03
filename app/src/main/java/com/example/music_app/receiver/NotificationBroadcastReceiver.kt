@@ -1,4 +1,4 @@
-package com.example.music_app.presentation.receiver
+package com.example.music_app.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
