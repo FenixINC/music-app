@@ -3,13 +3,26 @@ package com.example.music_app.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.music_app.core.model.Action
 import com.example.music_app.databinding.ListItemSongBinding
+import com.example.music_app.presentation.model.GenreModel
 import com.example.music_app.presentation.model.SongModel
 
 class SongAdapter(
-    private val clickListener: (SongModel, String) -> Unit
+    private val clickListener: (SongModel) -> Unit
 ) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
+
+//    class DiffUtilCallback(
+//        private val oldList: List<SongModel>,
+//        private val newList: List<SongModel>
+//    ) : DiffUtil.Callback() {
+//        override fun getOldListSize() = oldList.size
+//        override fun getNewListSize() = newList.size
+//        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+//            oldList[oldItemPosition].id == newList[newItemPosition].id
+//
+//        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+//            oldList[oldItemPosition] == newList[newItemPosition]
+//    }
 
     var songList = mutableListOf<SongModel>()
         set(value) {
@@ -33,7 +46,6 @@ class SongAdapter(
     }
 
     override fun getItemCount() = songList.size
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val holder = ListItemSongBinding.inflate(inflater, parent, false)
@@ -44,15 +56,14 @@ class SongAdapter(
         holder.bind(songModel = songList[position], clickListener = clickListener)
     }
 
-    class ViewHolder(private val binding: ListItemSongBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ListItemSongBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             songModel: SongModel,
-            clickListener: (SongModel, String) -> Unit
+            clickListener: (SongModel) -> Unit
         ) = with(binding) {
             model = songModel
-            icPlay.setOnClickListener { clickListener(songModel, Action.ACTION_PLAY.value) }
+//            icPlay.setOnClickListener { clickListener(songModel, Action.ACTION_PLAY.value) }
         }
     }
 }

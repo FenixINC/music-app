@@ -18,7 +18,7 @@
 
         <ImageView
             android:id="@+id/image_song"
-            android:layout_width="@dimen/image_size_big"
+            android:layout_width="300dp"
             android:layout_height="@dimen/image_size_big"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/song_name"
-            style="@style/StyleTextHeader"
+            style="@style/StyleNotificationTextHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_quarter"
@@ -43,7 +43,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/song_artist"
-            style="@style/StyleTextTitle"
+            style="@style/StyleNotificationTextDefault"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"

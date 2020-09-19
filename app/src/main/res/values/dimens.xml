@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--  Spacing sizing  -->
     <dimen name="spacing_tiny">2dp</dimen>
     <dimen name="spacing_quarter">4dp</dimen>
     <dimen name="spacing_half">8dp</dimen>
@@ -10,6 +11,7 @@
     <dimen name="spacing_big">24dp</dimen>
     <dimen name="spacing_double">32dp</dimen>
 
+    <!--  Text sizes  -->
     <dimen name="text_size_very_small">10sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_default">14sp</dimen>
@@ -19,6 +21,7 @@
     <dimen name="text_size_title">34sp</dimen>
     <dimen name="text_size_options_item">22sp</dimen>
 
+    <!--  Image sizes  -->
     <dimen name="image_size_big">150dp</dimen>
     <dimen name="image_size_default">48dp</dimen>
     <dimen name="image_size_small">36dp</dimen>
@@ -28,5 +31,9 @@
 
     <dimen name="notification_height">64dp</dimen>
 
-    <integer name="shadow_radius">1</integer>
+    <dimen name="song_size">220dp</dimen>
+
+    <!--  Song Placeholder  -->
+    <dimen name="song_placeholder_width">100dp</dimen>
+    <dimen name="song_placeholder_height">20dp</dimen>
 </resources>

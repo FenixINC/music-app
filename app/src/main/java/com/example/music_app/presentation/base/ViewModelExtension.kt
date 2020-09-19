@@ -1,4 +1,4 @@
-package com.example.music_app.presentation.viewmodel
+package com.example.music_app.presentation.base
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels

@@ -1,4 +1,4 @@
-package com.example.music_app.presentation.activity
+package com.example.music_app.presentation.main
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -8,7 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.music_app.R
-import com.example.music_app.presentation.viewmodel.MainViewModel
+import com.example.music_app.presentation.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 

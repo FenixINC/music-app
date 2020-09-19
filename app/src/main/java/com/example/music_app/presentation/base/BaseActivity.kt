@@ -1,4 +1,4 @@
-package com.example.music_app.presentation.activity
+package com.example.music_app.presentation.base
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import com.example.music_app.R
-import com.example.music_app.presentation.fragment.BaseFragment
+import com.example.music_app.presentation.base.BaseFragment
 
 abstract class BaseActivity : AppCompatActivity() {
 

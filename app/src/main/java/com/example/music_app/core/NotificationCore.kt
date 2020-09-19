@@ -14,9 +14,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.music_app.R
 import com.example.music_app.core.model.Action
-import com.example.music_app.presentation.constant.Constants
+import com.example.music_app.presentation.constant.NotificationConstants
+import com.example.music_app.presentation.model.GenreModel
 import com.example.music_app.presentation.model.SongModel
-import com.example.music_app.receiver.NotificationBroadcastReceiver
+import com.example.music_app.service.NotificationBroadcastReceiver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -34,14 +35,14 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
         private const val PLAY = "Play"
         private const val NEXT = "Next"
         private const val PREVIOUS = "Previous"
-        private const val NOTIFICATION_ID = 1
+        private const val NOTIFICATION_ID = 1 // Random.nextInt(60000)
 
         private var TAG = NotificationCore::class.java.simpleName
     }
 
     fun createNotification(
         context: Context,
-        songModel: SongModel,
+        songModel: GenreModel,
         drawableActionButton: Int,
         actionPosition: Int,
         size: Int
@@ -50,7 +51,7 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
             val notificationManagerCompat = NotificationManagerCompat.from(context)
             val mediaSessionCompat = MediaSessionCompat(context, TAG)
 
-            loadIconFromFirebase(songModel.imageUrl)
+//            loadIconFromFirebase(songModel.imageUrl)
 
             // Action Play
             val intentPlay = Intent(
@@ -101,10 +102,10 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
                 actionNext = R.drawable.ic_play_next
             }
 
-            notification = NotificationCompat.Builder(context, Constants.CHANNEL_ID)
+            notification = NotificationCompat.Builder(context, NotificationConstants.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_music_note)
-                .setContentTitle(songModel.name)
-                .setContentText(songModel.artist)
+//                .setContentTitle(songModel.name)
+//                .setContentText(songModel.artist)
                 .setLargeIcon(largeIcon)
                 .setOnlyAlertOnce(true) //show notification for only first time
                 .setShowWhen(false)
@@ -126,8 +127,8 @@ class NotificationCore @Inject constructor(private var notification: Notificatio
     fun createChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                Constants.CHANNEL_ID,
-                Constants.CHANNEL_NAME,
+                NotificationConstants.CHANNEL_ID,
+                NotificationConstants.CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_HIGH
             )
 

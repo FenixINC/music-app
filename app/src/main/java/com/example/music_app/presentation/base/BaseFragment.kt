@@ -1,4 +1,4 @@
-package com.example.music_app.presentation.fragment
+package com.example.music_app.presentation.base
 
 import android.os.Bundle
 import android.util.TypedValue

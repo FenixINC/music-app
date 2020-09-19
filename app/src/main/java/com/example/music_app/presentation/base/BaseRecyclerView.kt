@@ -1,4 +1,4 @@
-package com.example.music_app.presentation.adapter
+package com.example.music_app.presentation.base
 
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
