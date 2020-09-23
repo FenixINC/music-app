@@ -15,7 +15,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 import com.example.music_app.R
-import com.example.music_app.core.utils.createProgressBar
+import com.example.music_app.utils.createProgressBar
 
 abstract class BaseFragment/*<VM : BaseViewModel>*/ : Fragment(), LifecycleOwner {
 

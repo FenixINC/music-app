@@ -4,18 +4,18 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.music_app.data.repository.HomeRepository
 import com.example.music_app.presentation.base.BaseViewModel
 import com.example.music_app.presentation.model.GenreModel
 import com.example.music_app.presentation.model.ListItem
 import com.example.music_app.presentation.model.ProgressItem
 import com.example.music_app.presentation.model.SongModel
+import com.example.network.repository.MusicRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel @ViewModelInject constructor(
-    private val homeRepository: HomeRepository
+    private val homeRepository: MusicRepository
 ) : BaseViewModel() {
 
     companion object {
@@ -35,15 +35,15 @@ class HomeViewModel @ViewModelInject constructor(
     private fun getLoaders() = listOf(
         GenreModel(
             genre = "Genre 1",
-            songList = IntRange(1, 10).map { ProgressItem }
+            songList = LongRange(1, 10).map { ProgressItem }
         ),
         GenreModel(
             genre = "Genre 2",
-            songList = IntRange(1, 10).map { ProgressItem }
+            songList = LongRange(1, 10).map { ProgressItem }
         ),
         GenreModel(
             genre = "Genre 3",
-            songList = IntRange(1, 10).map { ProgressItem }
+            songList = LongRange(1, 10).map { ProgressItem }
         )
     )
 
@@ -52,7 +52,7 @@ class HomeViewModel @ViewModelInject constructor(
         return listOf(
             GenreModel(
                 genre = "Genre 1",
-                songList = IntRange(1, 10).map {
+                songList = LongRange(1, 10).map {
                     SongModel(
                         id = it,
                         name = "Title $it",
@@ -62,7 +62,7 @@ class HomeViewModel @ViewModelInject constructor(
             ),
             GenreModel(
                 genre = "Genre 2",
-                songList = IntRange(1, 10).map {
+                songList = LongRange(1, 10).map {
                     SongModel(
                         id = it,
                         name = "Title $it",
@@ -72,7 +72,7 @@ class HomeViewModel @ViewModelInject constructor(
             ),
             GenreModel(
                 genre = "Genre 3",
-                songList = IntRange(1, 10).map {
+                songList = LongRange(1, 10).map {
                     SongModel(
                         id = it,
                         name = "Title $it",

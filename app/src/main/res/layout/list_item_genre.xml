@@ -32,6 +32,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_song" />
+            tools:listitem="@layout/list_item_band" />
     </LinearLayout>
 </layout>

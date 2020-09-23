@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_half"
         android:orientation="vertical">
 
         <View
-            android:id="@+id/image_placeholder_view"
+            android:id="@+id/image_placeholder"
             android:layout_width="@dimen/image_size_big"
             android:layout_height="@dimen/image_size_big"
-            android:background="@drawable/bg_item_placeholder" />
+            android:background="@drawable/bg_item_placeholder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_name_placeholder_view"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/song_name_placeholder"
             style="@style/StyleTextHeader"
             android:layout_width="@dimen/song_placeholder_width"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="@dimen/spacing_quarter"
             android:background="@drawable/bg_item_placeholder"
-            tools:layout_marginTop="@dimen/spacing_quarter" />
-
-        <TextView
-            android:id="@+id/text_artist_placeholder_view"
-            style="@style/StyleTextTitle"
-            android:layout_width="@dimen/song_placeholder_width"
-            android:layout_height="@dimen/song_placeholder_height"
-            android:background="@drawable/bg_item_placeholder"
-            tools:layout_marginTop="@dimen/spacing_quarter" />
-    </LinearLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_placeholder" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

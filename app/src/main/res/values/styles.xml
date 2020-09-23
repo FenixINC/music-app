@@ -36,6 +36,7 @@
         <item name="android:textSize">@dimen/text_size_header_default</item>
         <item name="android:shadowColor">@color/black</item>
         <item name="android:shadowRadius">@integer/shadow_radius</item>
+        <item name="android:ellipsize">end</item>
         <item name="maxLines">1</item>
     </style>
 
@@ -44,6 +45,7 @@
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:shadowColor">@color/black</item>
         <item name="android:shadowRadius">@integer/shadow_radius</item>
+        <item name="android:ellipsize">end</item>
         <item name="maxLines">2</item>
     </style>
 </resources>

@@ -1,6 +1,6 @@
 package com.example.music_app.di
 
-import com.example.music_app.data.repository.HomeRepository
+import com.example.network.repository.MusicRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -12,5 +12,5 @@ import dagger.hilt.android.components.ApplicationComponent
 object ModuleRepository {
 
     @Provides
-    fun provideHomeRepository(firestoreDb: FirebaseFirestore) = HomeRepository(firestoreDb)
+    fun provideHomeRepository(firestoreDb: FirebaseFirestore) = MusicRepository(firestoreDb)
 }

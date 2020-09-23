@@ -1,13 +1,15 @@
 package com.example.music_app.presentation.model
 
 data class SongModel(
-    var id: Int? = 0,
-    var name: String? = "",
-    var artist: String? = "",
-    var genre: String? = "",
-    var album: String? = "",
-    var image: Int? = 0,
-    var imageUrl: String? = "",
-    var songUrl: String? = "",
-    var isPlay: Boolean? = false
-) : ListItem
+    val id: Long? = 0L,
+    val name: String? = "",
+    val artist: String? = "",
+    val genre: String? = "",
+    val album: String? = "",
+    val image: Int? = 0,
+    val imageUrl: String? = "",
+    val songUrl: String? = "",
+    val isPlay: Boolean? = false
+) : ListItem {
+    override val itemId: Long = id ?: 0L
+}

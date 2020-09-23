@@ -1,13 +1,12 @@
 package com.example.music_app.presentation.adapter
 
+import com.example.music_app.databinding.ListItemBandBinding
 import com.example.music_app.databinding.ListItemGenreBinding
 import com.example.music_app.databinding.ListItemProgressBinding
-import com.example.music_app.databinding.ListItemSongBinding
+import com.example.music_app.presentation.model.BandModel
 import com.example.music_app.presentation.model.GenreModel
 import com.example.music_app.presentation.model.ListItem
 import com.example.music_app.presentation.model.ProgressItem
-import com.example.music_app.presentation.model.SongModel
-import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 
 object HomeDelegates {
@@ -19,18 +18,13 @@ object HomeDelegates {
             }
         ) {
             // onCreateVewHolder
-            binding.rvSong.adapter = ListDelegationAdapter(
-                songItemDelegate,
-                progressItemDelegate
-            )
+            val adapter = SongAdapter()
+            binding.rvSong.adapter = adapter
 
             // onBindViewHolder
             bind {
                 binding.genre = item.genre
-                (binding.rvSong.adapter as ListDelegationAdapter<List<ListItem>>).apply {
-                    items = item.songList
-                    notifyDataSetChanged()
-                }
+                adapter.items = item.songList
             }
 
             // onViewRecycler
@@ -39,10 +33,10 @@ object HomeDelegates {
             }
         }
 
-    private val songItemDelegate =
-        adapterDelegateViewBinding<SongModel, ListItem, ListItemSongBinding>(
+    val songItemDelegate =
+        adapterDelegateViewBinding<BandModel, ListItem, ListItemBandBinding>(
             { inflater, container ->
-                ListItemSongBinding.inflate(inflater, container, false)
+                ListItemBandBinding.inflate(inflater, container, false)
             }
         ) {
             bind {
@@ -52,7 +46,7 @@ object HomeDelegates {
             }
         }
 
-    private val progressItemDelegate =
+    val progressItemDelegate =
         adapterDelegateViewBinding<ProgressItem, ListItem, ListItemProgressBinding>(
             { inflater, container -> ListItemProgressBinding.inflate(inflater, container, false) }
         ) {}

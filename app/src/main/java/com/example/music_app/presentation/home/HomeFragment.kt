@@ -1,25 +1,15 @@
 package com.example.music_app.presentation.home
 
-import android.content.Intent
-import android.content.IntentFilter
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.music_app.R
 import com.example.music_app.core.MediaPlayerCore
 import com.example.music_app.core.NotificationCore
-import com.example.music_app.core.model.Action
-import com.example.music_app.core.utils.showSimpleErrorDialog
 import com.example.music_app.databinding.FragmentHomeBinding
-import com.example.music_app.presentation.adapter.HomeDelegates
+import com.example.music_app.presentation.adapter.GenreAdapter
 import com.example.music_app.presentation.base.hiltNavViewModels
-import com.example.music_app.presentation.constant.NotificationConstants
-import com.example.music_app.presentation.model.GenreModel
-import com.example.music_app.presentation.model.SongModel
-import com.example.music_app.service.NotificationService
 import com.google.firebase.storage.FirebaseStorage
-import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,9 +18,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
 
-    private val adapter = ListDelegationAdapter(
-        HomeDelegates.songHorizontalDelegate
-    )
+    private val adapter = GenreAdapter()
 
     @Inject
     lateinit var notificationCore: NotificationCore
@@ -58,10 +46,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             recyclerView.adapter = adapter
 
             homeViewModel.songData.observe(viewLifecycleOwner, { genreList ->
-                adapter.apply {
-                    items = genreList
-                    notifyDataSetChanged()
-                }
+                adapter.items = genreList
             })
 
         }
