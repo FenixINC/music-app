@@ -1,11 +1,12 @@
 package com.example.network.response
 
-import com.google.firebase.firestore.PropertyName
+import com.google.gson.annotations.SerializedName
 
 data class SongResponse(
-    @get: PropertyName("id") @set: PropertyName("id") var id: Long? = 0L,
-    @get: PropertyName("name") @set: PropertyName("name") var name: String? = "",
-    @get: PropertyName("genre") @set: PropertyName("genre") var genre: String? = "",
-    @get: PropertyName("song_url") @set: PropertyName("song_url") var songUrl: String? = "",
-    @get: PropertyName("image_url") @set: PropertyName("image_url") var imageUrl: String? = ""
+    @SerializedName("id") val id: Long,
+    @SerializedName("name") val name: String,
+    @SerializedName("band_name") val bandName: String,
+    @SerializedName("genre_name") val genreName: String,
+    @SerializedName("image_url") val imageUrl: String,
+    @SerializedName("song_url") val songUrl: String
 )

@@ -1,5 +1,9 @@
 package com.example.music_app.presentation.adapter
 
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.music_app.R
 import com.example.music_app.databinding.ListItemBandBinding
 import com.example.music_app.databinding.ListItemGenreBinding
 import com.example.music_app.databinding.ListItemProgressBinding
@@ -18,13 +22,13 @@ object HomeDelegates {
             }
         ) {
             // onCreateVewHolder
-            val adapter = SongAdapter()
-            binding.rvSong.adapter = adapter
+            val adapter = BandsAdapter()
+            binding.recyclerViewBands.adapter = adapter
 
             // onBindViewHolder
             bind {
-                binding.genre = item.genre
-                adapter.items = item.songList
+                binding.genre = item.genreName
+                adapter.items = item.bandList
             }
 
             // onViewRecycler
@@ -33,15 +37,27 @@ object HomeDelegates {
             }
         }
 
-    val songItemDelegate =
+    val bandItemDelegate =
         adapterDelegateViewBinding<BandModel, ListItem, ListItemBandBinding>(
             { inflater, container ->
                 ListItemBandBinding.inflate(inflater, container, false)
             }
         ) {
             bind {
+                val resources = binding.root.resources
+                Glide.with(binding.root)
+                    .load(item.imageUrl)
+                    .override(
+                        resources.getDimensionPixelOffset(R.dimen.image_size_150dp),
+                        resources.getDimensionPixelOffset(R.dimen.image_size_150dp)
+                    )
+                    .transform(
+                        CenterCrop(),
+                        RoundedCorners(resources.getDimensionPixelOffset(R.dimen.image_size_36dp))
+                    )
+                    .into(binding.imageBand)
+
                 binding.model = item
-                binding.imageSong.setBackgroundColor(item.hashCode())
                 binding.executePendingBindings()
             }
         }

@@ -1,0 +1,101 @@
+[
+  {
+    "id": "1",
+    "genre_name": "Rock",
+    "image_url": "",
+    "band_list": [
+      {
+        "id": "1",
+        "name": "AC/DC",
+        "genre_name": "Rock",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_images%2FACDC%2FAC_DC.jpg?alt=media&token=d32e5473-291a-4308-9a58-e4b7d02c7e0b",
+        "song_list": [
+          {
+            "id": "1",
+            "name": "Thunderstruck",
+            "band_name": "AC/DC",
+            "genre_name": "Rock",
+            "image_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_images%2FACDC%2FThunderstruck.jpg?alt=media&token=93a21bc4-511c-4b23-8ff8-8060b6013724",
+            "song_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_songs%2FACDC%2FThunderstruck.mp3?alt=media&token=c23e072b-1f40-4411-8abd-99386e774dc2"
+          },
+          {
+            "id": "2",
+            "name": "Highway to Hell",
+            "band_name": "AC/DC",
+            "genre_name": "Rock",
+            "image_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_images%2FACDC%2FHighway%20to%20Hell.jpg?alt=media&token=c572f876-3ded-49e2-8369-3b8e1f1bfb1b",
+            "song_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_songs%2FACDC%2FHighway%20To%20Hell.mp3?alt=media&token=7170bf6b-22ee-4684-b433-fc27c51a6d70"
+          },
+          {
+            "id": "3",
+            "name": "Back In Black",
+            "band_name": "AC/DC",
+            "genre_name": "Rock",
+            "image_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_images%2FACDC%2FBack%20In%20Black.jpg?alt=media&token=3ef9bdf7-ad1d-4eb3-8435-3320a84b2904",
+            "song_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_songs%2FACDC%2FBack%20In%20Black.mp3?alt=media&token=76873229-79db-4d5f-9027-c7d3c986eeb5"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "name": "Sabaton",
+        "genre_name": "Rock",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_images%2FSabaton%2FSabaton%20Official.jpg?alt=media&token=b7a0740a-23f4-4452-9628-6b46cc51ad8d",
+        "song_list": [
+          {
+            "id": "1",
+            "name": "Twilight Of The Thunder God",
+            "band_name": "Sabaton",
+            "genre_name": "Rock",
+            "image_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_images%2FSabaton%2FTwilight%20Of%20The%20Thunder%20God.jpg?alt=media&token=694bd1d9-8621-4c58-8fd4-c460405db719",
+            "song_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_songs%2FSabaton%2FTwilight%20Of%20The%20Thunder%20God.mp3?alt=media&token=d497c7f8-8929-4ec5-9cb8-bc9f9239efea"
+          },
+          {
+            "id": "2",
+            "name": "Ghost Division",
+            "band_name": "Sabaton",
+            "genre_name": "Rock",
+            "image_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_images%2FSabaton%2FGhost%20Division.jpg?alt=media&token=621b08ab-c82b-475b-a17f-13a67118d300",
+            "song_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_songs%2FSabaton%2FGhost%20Division.mp3?alt=media&token=334c3369-d1fe-43fd-9cea-1fa4b4229e37"
+          },
+          {
+            "id": "3",
+            "name": "Rorke's Drift",
+            "band_name": "Sabaton",
+            "genre_name": "Rock",
+            "image_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_images%2FSabaton%2FRorke's%20Drift.jpg?alt=media&token=5f7a6c6b-2b9a-44c9-85f0-2177a1212917",
+            "song_url": "https://firebasestorage.googleapis.com/v0/b/music-app-c875f.appspot.com/o/music_songs%2FSabaton%2FRorke's%20Drift.mp3?alt=media&token=82332f44-9e8d-4ef9-b69b-81d45df07bb0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "genre_name": "Power Metal",
+    "image_url": "",
+    "band_list": [
+    ]
+  },
+  {
+    "id": "3",
+    "genre_name": "Electronic",
+    "image_url": "",
+    "band_list": [
+    ]
+  },
+  {
+    "id": "4",
+    "genre_name": "Retro",
+    "image_url": "",
+    "band_list": [
+    ]
+  },
+  {
+    "id": "5",
+    "genre_name": "Synthwave",
+    "image_url": "",
+    "band_list": [
+    ]
+  }
+]

@@ -22,10 +22,10 @@
     <dimen name="text_size_options_item">22sp</dimen>
 
     <!--  Image sizes  -->
-    <dimen name="image_size_big">150dp</dimen>
-    <dimen name="image_size_default">48dp</dimen>
-    <dimen name="image_size_small">36dp</dimen>
-    <dimen name="image_size_item_character">130dp</dimen>
+    <dimen name="image_size_48dp">48dp</dimen>
+    <dimen name="image_size_36dp">36dp</dimen>
+    <dimen name="image_size_150dp">150dp</dimen>
+    <dimen name="image_size_item_character_130dp">130dp</dimen>
 
     <dimen name="corner_default">16dp</dimen>
 

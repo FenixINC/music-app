@@ -62,13 +62,13 @@ class OldGenreAdapter(
 //            diffUtilResult.dispatchUpdatesTo(songAdapter)
 //        }
 
-        val genreModel = genreList[position]
-        val songList = genreList[position].songList
+//        val genreModel = genreList[position]
+//        val songList = genreList[position].songList
 
         val songAdapter = OldSongAdapter(listener)
 //        songAdapter.songList = songList!!.toMutableList()
 
-        holder.bind(genre = genreModel.genre!!, oldSongAdapter = songAdapter)
+//        holder.bind(genre = genreModel.genre!!, oldSongAdapter = songAdapter)
     }
 
     class ViewHolder(private val binding: ListItemGenreBinding) : RecyclerView.ViewHolder(binding.root) {

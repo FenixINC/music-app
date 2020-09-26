@@ -42,6 +42,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        val jsonFileString = getJsonDataFromAsset(activity?.applicationContext!!, "genre_list.json.json")
+//
+//        val gson = Gson()
+//        val genreListType = object : TypeToken<List<GenreResponse>>() {}.type
+//
+//        var genreList: List<GenreResponse> = gson.fromJson(jsonFileString, genreListType)
+//        genreList.forEachIndexed { index, genreResponse ->
+//            val result = genreResponse
+//        }
+
+        homeViewModel.loadGenreListJson(
+            context?.resources?.openRawResource(R.raw.genre_list)?.bufferedReader()
+                .use { it?.readText()!! })
+
         with(binding) {
             recyclerView.adapter = adapter
 

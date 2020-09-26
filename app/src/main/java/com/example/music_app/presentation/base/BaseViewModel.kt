@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import org.koin.core.KoinComponent
 
 abstract class BaseViewModel : ViewModel(), KoinComponent, LifecycleObserver {
-    val errorMessageLiveData = MutableLiveData<String>()
-    val loadingLiveData = MutableLiveData<Boolean>()
+    protected val _errorMessageLiveData = MutableLiveData<String>()
+    val errorMessageLiveData = _errorMessageLiveData
+
+    protected val _loadingLiveData = MutableLiveData<Boolean>()
+    val loadingLiveData = _loadingLiveData
 }

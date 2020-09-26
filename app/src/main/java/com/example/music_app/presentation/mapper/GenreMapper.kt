@@ -4,9 +4,11 @@ import com.example.music_app.presentation.model.GenreModel
 import com.example.network.response.GenreResponse
 
 fun mapResponseToModel(genreListResponse: List<GenreResponse>) =
-    genreListResponse.map { genreModel ->
+    genreListResponse.map { genreResponse ->
         GenreModel(
-            genre = genreModel.genre,
-            songList = mapResponseToModel(genreModel.songList)
+            id = genreResponse.id,
+            genreName = genreResponse.genreName,
+            imageUrl = genreResponse.imageUrl,
+            bandList = mapResponseToModel(genreResponse.bandList)
         )
     }

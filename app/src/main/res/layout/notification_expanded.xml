@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/notification_song_image"
-        android:layout_width="@dimen/image_size_big"
-        android:layout_height="@dimen/image_size_big"
+        android:layout_width="@dimen/image_size_150dp"
+        android:layout_height="@dimen/image_size_150dp"
         tools:ignore="ContentDescription"
         tools:scaleType="center"
         tools:src="@tools:sample/backgrounds/scenic" />
@@ -60,8 +60,8 @@
 
             <ImageView
                 android:id="@+id/notification_ic_previous"
-                android:layout_width="@dimen/image_size_small"
-                android:layout_height="@dimen/image_size_small"
+                android:layout_width="@dimen/image_size_36dp"
+                android:layout_height="@dimen/image_size_36dp"
                 android:layout_marginStart="@dimen/spacing_default"
                 android:layout_marginEnd="@dimen/spacing_half"
                 android:layout_weight="1"
@@ -71,8 +71,8 @@
 
             <ImageView
                 android:id="@+id/notification_ic_play"
-                android:layout_width="@dimen/image_size_small"
-                android:layout_height="@dimen/image_size_small"
+                android:layout_width="@dimen/image_size_36dp"
+                android:layout_height="@dimen/image_size_36dp"
                 android:layout_marginStart="@dimen/spacing_half"
                 android:layout_marginEnd="@dimen/spacing_half"
                 android:layout_weight="1"
@@ -82,8 +82,8 @@
 
             <ImageView
                 android:id="@+id/notification_ic_next"
-                android:layout_width="@dimen/image_size_small"
-                android:layout_height="@dimen/image_size_small"
+                android:layout_width="@dimen/image_size_36dp"
+                android:layout_height="@dimen/image_size_36dp"
                 android:layout_marginStart="@dimen/spacing_half"
                 android:layout_marginEnd="@dimen/spacing_default"
                 android:layout_weight="1"

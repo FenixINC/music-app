@@ -10,8 +10,8 @@
 
         <View
             android:id="@+id/image_placeholder"
-            android:layout_width="@dimen/image_size_big"
-            android:layout_height="@dimen/image_size_big"
+            android:layout_width="@dimen/image_size_150dp"
+            android:layout_height="@dimen/image_size_150dp"
             android:background="@drawable/bg_item_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

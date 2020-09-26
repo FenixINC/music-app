@@ -27,7 +27,7 @@
             tools:text="Retro" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_song"
+            android:id="@+id/recycler_view_bands"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

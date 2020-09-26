@@ -5,13 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.music_app.presentation.base.BaseViewModel
+import com.example.music_app.presentation.mapper.mapResponseToModel
+import com.example.music_app.presentation.model.BandModel
 import com.example.music_app.presentation.model.GenreModel
 import com.example.music_app.presentation.model.ListItem
 import com.example.music_app.presentation.model.ProgressItem
-import com.example.music_app.presentation.model.SongModel
 import com.example.network.repository.MusicRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class HomeViewModel @ViewModelInject constructor(
@@ -28,55 +31,61 @@ class HomeViewModel @ViewModelInject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             _songData.postValue(getLoaders())
-            _songData.postValue(getGenreList())
         }
     }
 
     private fun getLoaders() = listOf(
         GenreModel(
-            genre = "Genre 1",
-            songList = LongRange(1, 10).map { ProgressItem }
+            genreName = "Genre 1",
+            bandList = LongRange(1, 10).map { ProgressItem }
         ),
         GenreModel(
-            genre = "Genre 2",
-            songList = LongRange(1, 10).map { ProgressItem }
+            genreName = "Genre 2",
+            bandList = LongRange(1, 10).map { ProgressItem }
         ),
         GenreModel(
-            genre = "Genre 3",
-            songList = LongRange(1, 10).map { ProgressItem }
+            genreName = "Genre 3",
+            bandList = LongRange(1, 10).map { ProgressItem }
         )
     )
+
+    fun loadGenreListJson(fileName: String) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            homeRepository.loadGenreListJson(fileName).collect { data ->
+                _songData.postValue(mapResponseToModel(data))
+            }
+        } catch (e: Exception) {
+            _errorMessageLiveData.postValue(e.message)
+        }
+    }
 
     private suspend fun getGenreList(): List<ListItem> {
         delay(2_000L)
         return listOf(
             GenreModel(
-                genre = "Genre 1",
-                songList = LongRange(1, 10).map {
-                    SongModel(
+                genreName = "Genre 1",
+                bandList = LongRange(1, 10).map {
+                    BandModel(
                         id = it,
-                        name = "Title $it",
-                        artist = "Artist $it"
+                        name = "Title $it"
                     )
                 }
             ),
             GenreModel(
-                genre = "Genre 2",
-                songList = LongRange(1, 10).map {
-                    SongModel(
+                genreName = "Genre 2",
+                bandList = LongRange(1, 10).map {
+                    BandModel(
                         id = it,
-                        name = "Title $it",
-                        artist = "Artist $it"
+                        name = "Title $it"
                     )
                 }
             ),
             GenreModel(
-                genre = "Genre 3",
-                songList = LongRange(1, 10).map {
-                    SongModel(
+                genreName = "Genre 3",
+                bandList = LongRange(1, 10).map {
+                    BandModel(
                         id = it,
-                        name = "Title $it",
-                        artist = "Artist $it"
+                        name = "Title $it"
                     )
                 }
             )

@@ -16,9 +16,9 @@
         android:layout_margin="@dimen/spacing_half">
 
         <ImageView
-            android:id="@+id/image_song"
-            android:layout_width="@dimen/image_size_big"
-            android:layout_height="@dimen/image_size_big"
+            android:id="@+id/image_band"
+            android:layout_width="@dimen/image_size_150dp"
+            android:layout_height="@dimen/image_size_150dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,14 +27,15 @@
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/song_name"
+            android:id="@+id/text_band_name"
             style="@style/StyleTextHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_quarter"
             android:text="@{model.name}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_song"
+            app:layout_constraintTop_toBottomOf="@id/image_band"
             tools:text="Whiteout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

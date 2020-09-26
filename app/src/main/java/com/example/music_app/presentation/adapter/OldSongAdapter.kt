@@ -3,7 +3,6 @@ package com.example.music_app.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.music_app.databinding.ListItemSongBinding
 import com.example.music_app.presentation.model.SongModel
 
 class OldSongAdapter(
