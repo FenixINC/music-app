@@ -27,7 +27,7 @@
     <dimen name="image_size_150dp">150dp</dimen>
     <dimen name="image_size_item_character_130dp">130dp</dimen>
 
-    <dimen name="corner_default">16dp</dimen>
+    <dimen name="corners_16dp">16dp</dimen>
 
     <dimen name="notification_height">64dp</dimen>
 

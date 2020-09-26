@@ -3,6 +3,7 @@ package com.example.music_app.presentation.adapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.music_app.R
 import com.example.music_app.databinding.ListItemBandBinding
 import com.example.music_app.databinding.ListItemGenreBinding
@@ -53,8 +54,9 @@ object HomeDelegates {
                     )
                     .transform(
                         CenterCrop(),
-                        RoundedCorners(resources.getDimensionPixelOffset(R.dimen.image_size_36dp))
+                        RoundedCorners(resources.getDimensionPixelOffset(R.dimen.corners_16dp))
                     )
+                    .transition(DrawableTransitionOptions.withCrossFade(300))
                     .into(binding.imageBand)
 
                 binding.model = item
