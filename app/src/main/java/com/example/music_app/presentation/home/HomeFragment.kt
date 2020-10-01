@@ -3,14 +3,17 @@ package com.example.music_app.presentation.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.music_app.R
 import com.example.music_app.core.MediaPlayerCore
 import com.example.music_app.core.NotificationCore
 import com.example.music_app.databinding.FragmentHomeBinding
 import com.example.music_app.presentation.adapter.GenreAdapter
 import com.example.music_app.presentation.base.hiltNavViewModels
+import com.example.music_app.utils.viewBinding
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -52,9 +55,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 //            val result = genreResponse
 //        }
 
-        homeViewModel.loadGenreListJson(
-            context?.resources?.openRawResource(R.raw.genre_list)?.bufferedReader()
-                .use { it?.readText()!! })
+//        homeViewModel.loadGenreListJson(
+//            context?.resources?.openRawResource(R.raw.genre_list)?.bufferedReader()
+//                .use { it?.readText()!! })
+
+        lifecycleScope.launchWhenStarted {
+//            homeViewModel.genreListJson.collect {
+//
+//            }
+        }
 
         with(binding) {
             recyclerView.adapter = adapter

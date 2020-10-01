@@ -1,4 +1,4 @@
-package com.example.music_app.presentation.home
+package com.example.music_app.utils
 
 import android.view.View
 import androidx.fragment.app.Fragment
