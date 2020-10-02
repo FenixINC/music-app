@@ -94,23 +94,7 @@ class MusicRepository @Inject constructor(private val firestoreDb: FirebaseFires
         }
     }
 
-//    suspend fun loadGenreListJson(fileName: String): Flow<List<GenreResponse>> {
-//        delay(1000L)
-//
-//        val gson = Gson()
-//        val genreListType = object : TypeToken<List<GenreResponse>>() {}.type
-//
-//        val genreList: List<GenreResponse> = gson.fromJson(fileName, genreListType)
-////        genreList.forEachIndexed { index, genreResponse ->
-////            val result = genreResponse
-////        }
-//
-//        return flow {
-//            emit(genreList)
-//        }
-//    }
-
-    fun loadGenreListJson(fileName: String): Flow<List<GenreResponse>> = flow {
+    suspend fun loadGenreListJson(fileName: String): Flow<List<GenreResponse>> = flow {
         delay(1000L)
 
         val gson = Gson()

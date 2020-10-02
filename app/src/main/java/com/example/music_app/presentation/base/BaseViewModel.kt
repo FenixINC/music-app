@@ -11,4 +11,6 @@ abstract class BaseViewModel : ViewModel(), KoinComponent, LifecycleObserver {
 
     protected val _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData = _loadingLiveData
+
+
 }

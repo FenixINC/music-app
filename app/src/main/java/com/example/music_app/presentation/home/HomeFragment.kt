@@ -3,17 +3,19 @@ package com.example.music_app.presentation.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.example.music_app.R
 import com.example.music_app.core.MediaPlayerCore
 import com.example.music_app.core.NotificationCore
 import com.example.music_app.databinding.FragmentHomeBinding
 import com.example.music_app.presentation.adapter.GenreAdapter
 import com.example.music_app.presentation.base.hiltNavViewModels
+import com.example.music_app.presentation.viewintent.HomeViewIntent
+import com.example.music_app.presentation.viewstate.HomeViewState
+import com.example.music_app.utils.ProgressUtils
+import com.example.music_app.utils.ViewUtils
 import com.example.music_app.utils.viewBinding
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -21,7 +23,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
 
-    private val adapter = GenreAdapter()
+    private val genreAdapter = GenreAdapter()
 
     @Inject
     lateinit var notificationCore: NotificationCore
@@ -59,20 +61,40 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 //            context?.resources?.openRawResource(R.raw.genre_list)?.bufferedReader()
 //                .use { it?.readText()!! })
 
-        lifecycleScope.launchWhenStarted {
-//            homeViewModel.genreListJson.collect {
-//
-//            }
-        }
+        setAdapter()
+        observeData()
+        setIntents()
+    }
 
-        with(binding) {
-            recyclerView.adapter = adapter
+    private fun setAdapter() {
+        binding.recyclerView.adapter = genreAdapter
+    }
 
-            homeViewModel.songData.observe(viewLifecycleOwner, { genreList ->
-                adapter.items = genreList
-            })
+    private fun observeData() {
+        homeViewModel.homeViewState.observe(viewLifecycleOwner, { homeViewState ->
+            when (homeViewState) {
+                is HomeViewState.LoadingState -> {
+                    ProgressUtils.setLoadingState(
+                        isLoading = homeViewState.isLoading,
+                        context = requireContext()
+                    )
+                }
+                is HomeViewState.Error -> {
+                    ViewUtils.showSimpleErrorDialog(
+                        context = requireContext(),
+                        title = getString(R.string.error),
+                        message = homeViewState.errorMessage
+                    )
+                }
+                is HomeViewState.Genres -> {
+                    genreAdapter.items = homeViewState.genreList
+                }
+            }
+        })
+    }
 
-        }
+    private fun setIntents() {
+        homeViewModel.setIntent(HomeViewIntent.FetchGenreList)
     }
 
 //    private fun loadData() {

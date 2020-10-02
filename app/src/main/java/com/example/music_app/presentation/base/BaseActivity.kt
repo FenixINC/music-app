@@ -29,7 +29,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onBackPressed()
         val view = findViewById<View>(fragmentHostId)
         if (view is BaseFragment/*<*>*/) {
-            view.onBackPressed()
+//            view.onBackPressed()
         }
     }
 }

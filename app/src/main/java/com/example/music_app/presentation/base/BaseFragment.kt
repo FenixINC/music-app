@@ -15,7 +15,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 import com.example.music_app.R
-import com.example.music_app.utils.createProgressBar
 
 abstract class BaseFragment/*<VM : BaseViewModel>*/ : Fragment(), LifecycleOwner {
 
@@ -23,24 +22,24 @@ abstract class BaseFragment/*<VM : BaseViewModel>*/ : Fragment(), LifecycleOwner
 
     protected var progressDialog: AlertDialog? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = inflater.inflate(getLayoutRes(), container, false)
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View = inflater.inflate(getLayoutRes(), container, false)
+//
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//        // We don't need to remove this callback; Android does it for us.
+//        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) { onBackPressed() }
+//    }
+//
+//    open fun onBackPressed() {
+//        findNavController().popBackStack()
+//    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // We don't need to remove this callback; Android does it for us.
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) { onBackPressed() }
-    }
-
-    open fun onBackPressed() {
-        findNavController().popBackStack()
-    }
-
-    @LayoutRes
-    protected abstract fun getLayoutRes(): Int
+//    @LayoutRes
+//    protected abstract fun getLayoutRes(): Int
 
     protected fun getPrimaryColor() = context?.let {
         val colorValue = TypedValue()
@@ -61,21 +60,21 @@ abstract class BaseFragment/*<VM : BaseViewModel>*/ : Fragment(), LifecycleOwner
         }
     }
 
-    protected fun setLoadingState(isLoading: Boolean) {
-        if (isLoading) {
-            showLoading()
-        } else {
-            hideLoading()
-        }
-    }
-
-    protected fun showLoading() = context?.let {
-        progressDialog = createProgressBar(it)
-        progressDialog?.show()
-    }
-
-    protected fun hideLoading() {
-        progressDialog?.dismiss()
-        progressDialog = null
-    }
+//    protected fun setLoadingState(isLoading: Boolean) {
+//        if (isLoading) {
+//            showLoading()
+//        } else {
+//            hideLoading()
+//        }
+//    }
+//
+//    protected fun showLoading() = context?.let {
+//        progressDialog = createProgressBar(it)
+//        progressDialog?.show()
+//    }
+//
+//    protected fun hideLoading() {
+//        progressDialog?.dismiss()
+//        progressDialog = null
+//    }
 }
