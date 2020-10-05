@@ -12,9 +12,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
+import org.koin.java.KoinJavaComponent
 
-class MusicRepository @Inject constructor(private val firestoreDb: FirebaseFirestore) {
+class MusicRepository {
+
+    private val firestoreDb by KoinJavaComponent.inject(FirebaseFirestore.getInstance()::class.java)
 
     @ExperimentalCoroutinesApi
     val songFlowData = MutableStateFlow<List<SongResponse>>(emptyList())

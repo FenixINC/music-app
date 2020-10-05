@@ -4,45 +4,35 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.music_app.R
-import com.example.music_app.core.MediaPlayerCore
-import com.example.music_app.core.NotificationCore
 import com.example.music_app.databinding.FragmentHomeBinding
 import com.example.music_app.presentation.adapter.GenreAdapter
-import com.example.music_app.presentation.base.hiltNavViewModels
 import com.example.music_app.presentation.viewintent.HomeViewIntent
 import com.example.music_app.presentation.viewstate.HomeViewState
 import com.example.music_app.utils.ProgressUtils
 import com.example.music_app.utils.ViewUtils
 import com.example.music_app.utils.viewBinding
-import com.google.firebase.storage.FirebaseStorage
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
-@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
 
+    //    private val component by lazy { HomeScreenComponent.create() }
+//    private val homeViewModel by viewModels<HomeViewModel> { component.viewModelFactory() }
     private val genreAdapter = GenreAdapter()
+    private val dep by lazy { inject<HomeViewModel>() }
 
-    @Inject
-    lateinit var notificationCore: NotificationCore
+//    @Inject
+//    lateinit var notificationCore: NotificationCore
+//
+//    @Inject
+//    lateinit var mediaPlayerCore: MediaPlayerCore
+//
+//    @Inject
+//    lateinit var storage: FirebaseStorage
 
-    @Inject
-    lateinit var mediaPlayerCore: MediaPlayerCore
-
-    @Inject
-    lateinit var storage: FirebaseStorage
-
-    private val homeViewModel by hiltNavViewModels<HomeViewModel>()
-
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-////        loadData()
-//        observeData()
-//        setupAdapter()
-//        startNotificationService()
-//    }
+    //        private val homeViewModel by hiltNavViewModels<HomeViewModel>()
+    private val homeViewModel by inject<HomeViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,7 +51,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 //            context?.resources?.openRawResource(R.raw.genre_list)?.bufferedReader()
 //                .use { it?.readText()!! })
 
-        setAdapter()
+//        setAdapter()
         observeData()
         setIntents()
     }
@@ -73,17 +63,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun observeData() {
         homeViewModel.homeViewState.observe(viewLifecycleOwner, { homeViewState ->
             when (homeViewState) {
-                is HomeViewState.LoadingState -> {
-                    ProgressUtils.setLoadingState(
-                        isLoading = homeViewState.isLoading,
-                        context = requireContext()
-                    )
-                }
                 is HomeViewState.Error -> {
                     ViewUtils.showSimpleErrorDialog(
                         context = requireContext(),
                         title = getString(R.string.error),
                         message = homeViewState.errorMessage
+                    )
+                }
+                is HomeViewState.LoadingState -> {
+                    ProgressUtils.setLoadingState(
+                        isLoading = homeViewState.isLoading,
+                        context = requireContext()
                     )
                 }
                 is HomeViewState.Genres -> {
@@ -94,7 +84,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setIntents() {
-        homeViewModel.setIntent(HomeViewIntent.FetchGenreList)
+        homeViewModel.setIntent(
+            HomeViewIntent.FetchGenreList(
+                requireContext().resources?.openRawResource(
+                    R.raw.genre_list
+                )?.bufferedReader().use { it?.readText()!! }
+            )
+        )
     }
 
 //    private fun loadData() {

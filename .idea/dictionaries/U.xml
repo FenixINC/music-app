@@ -3,6 +3,9 @@
     <words>
       <w>firestore</w>
       <w>gson</w>
+      <w>kapt</w>
+      <w>kodein</w>
+      <w>koin</w>
     </words>
   </dictionary>
 </component>

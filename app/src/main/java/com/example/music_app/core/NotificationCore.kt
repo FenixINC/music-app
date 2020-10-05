@@ -16,16 +16,14 @@ import com.example.music_app.R
 import com.example.music_app.core.model.Action
 import com.example.music_app.presentation.constant.NotificationConstants
 import com.example.music_app.presentation.model.GenreModel
-import com.example.music_app.presentation.model.SongModel
 import com.example.music_app.service.NotificationBroadcastReceiver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.URL
-import javax.inject.Inject
 
-class NotificationCore @Inject constructor(private var notification: Notification) {
+class NotificationCore constructor(private var notification: Notification) {
 
     private lateinit var notificationManager: NotificationManager
 

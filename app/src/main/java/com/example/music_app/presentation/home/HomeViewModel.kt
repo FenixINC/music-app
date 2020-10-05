@@ -1,6 +1,5 @@
 package com.example.music_app.presentation.home
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,14 +10,13 @@ import com.example.music_app.presentation.model.GenreModel
 import com.example.music_app.presentation.model.ProgressItem
 import com.example.music_app.presentation.viewintent.HomeViewIntent
 import com.example.music_app.presentation.viewstate.HomeViewState
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
+import org.koin.core.inject
 
-class HomeViewModel @OptIn(ExperimentalCoroutinesApi::class)
-@ViewModelInject constructor(
-    private val loadGenreListUseCase: LoadGenreListUseCase
-) : BaseViewModel() {
+class HomeViewModel : BaseViewModel() {
+
+    private val loadGenreListUseCase by inject<LoadGenreListUseCase>()
 
     companion object {
         private const val POSITION_DEFAULT = 0
@@ -43,14 +41,14 @@ class HomeViewModel @OptIn(ExperimentalCoroutinesApi::class)
             when (homeViewIntent) {
                 is HomeViewIntent.FetchGenreList -> {
                     _homeViewState.postValue(HomeViewState.LoadingState(isLoading = true))
-                    loadGenreList()
+                    loadGenreList(homeViewIntent.fileName)
                 }
             }
         }
     }
 
-    private suspend fun loadGenreList() = loadGenreListUseCase.loadGenreList(
-        fileName = "",
+    private suspend fun loadGenreList(fileName: String) = loadGenreListUseCase.loadGenreList(
+        fileName = fileName,
         onError = { errorMessage ->
             _homeViewState.postValue(HomeViewState.Error(errorMessage = errorMessage))
         },

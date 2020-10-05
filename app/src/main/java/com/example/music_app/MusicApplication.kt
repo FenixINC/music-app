@@ -1,15 +1,19 @@
 package com.example.music_app
 
 import android.app.Application
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import com.example.domain.di.useCaseModule
+import com.example.music_app.di.viewModelModule
+import com.example.network.di.networkModule
 import com.facebook.stetho.Stetho
-import dagger.hilt.android.HiltAndroidApp
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.koin.core.context.unloadKoinModules
 import timber.log.Timber
-import java.util.regex.Pattern
 
-@HiltAndroidApp
-class MusicApplication : Application() {
+class MusicApplication : Application(), LifecycleObserver {
 
     companion object {
         lateinit var sInstance: MusicApplication
@@ -24,18 +28,17 @@ class MusicApplication : Application() {
         sInstance = this
         Stetho.initializeWithDefaults(this@MusicApplication)
         Timber.plant(Timber.DebugTree())
-
         val text = getTextOnly("Dima1243(4 * 3!) * 56 + is9r7 Android (37 - 13) developer")
-//        setKoin()
+        setKoin()
     }
 
     private fun setKoin() = startKoin {
         androidContext(this@MusicApplication)
         modules(
             listOf(
-//                viewModelModule,
-//                repositoryModule,
-//                networkModule,
+                viewModelModule,
+                useCaseModule,
+                networkModule,
 //                serviceModule,
 //                databaseModule,
 //                daoModule
@@ -67,5 +70,10 @@ class MusicApplication : Application() {
 //            matcher.
 //        }
 //        return pattern.split(text)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun onStop() {
+        unloadKoinModules(listOf())
     }
 }
