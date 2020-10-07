@@ -4,10 +4,7 @@ import com.example.domain.mappers.mapGenreResponseToDomain
 import com.example.domain.models.GenreDomainModel
 import com.example.network.repository.MusicRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import org.koin.java.KoinJavaComponent
 
 class LoadGenreListUseCase {
@@ -21,6 +18,7 @@ class LoadGenreListUseCase {
         onSuccess: (List<GenreDomainModel>) -> Unit
     ) {
         repository.loadGenreListJson(fileName)
+            .onStart { onIsLoading(true) }
             .map { mapGenreResponseToDomain(it) }
             .flowOn(Dispatchers.IO)
             .catch { throwable ->
@@ -28,10 +26,10 @@ class LoadGenreListUseCase {
                     onError(errorMessage)
                 }
             }
+            .buffer()
+            .onCompletion { onIsLoading(false) }
             .collect {
                 onSuccess(it)
             }
-
-        onIsLoading(false)
     }
 }

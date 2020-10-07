@@ -1,7 +1,5 @@
 package com.example.music_app.presentation.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecases.LoadGenreListUseCase
 import com.example.music_app.presentation.base.BaseViewModel
@@ -10,10 +8,16 @@ import com.example.music_app.presentation.model.GenreModel
 import com.example.music_app.presentation.model.ProgressItem
 import com.example.music_app.presentation.viewintent.HomeViewIntent
 import com.example.music_app.presentation.viewstate.HomeViewState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import org.koin.core.inject
 
+@ExperimentalCoroutinesApi
 class HomeViewModel : BaseViewModel() {
 
     private val loadGenreListUseCase by inject<LoadGenreListUseCase>()
@@ -27,21 +31,26 @@ class HomeViewModel : BaseViewModel() {
 
     val intentChannel = Channel<HomeViewIntent>(Channel.UNLIMITED)
 
-    private val _homeViewState = MutableLiveData<HomeViewState>()
-    val homeViewState: LiveData<HomeViewState> = _homeViewState
-
-//    init {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            _songData.postValue(getLoaders())
-//        }
-//    }
+    private val _homeViewState = MutableStateFlow<HomeViewState>(HomeViewState.LoadingState(isLoading = true))
+    val homeViewState: StateFlow<HomeViewState> = _homeViewState
 
     fun setIntent(homeViewIntent: HomeViewIntent) {
         viewModelScope.launch {
             when (homeViewIntent) {
                 is HomeViewIntent.FetchGenreList -> {
-                    _homeViewState.postValue(HomeViewState.LoadingState(isLoading = true))
-                    loadGenreList(homeViewIntent.fileName)
+                    handleIntent()
+                }
+            }
+        }
+    }
+
+    private fun handleIntent() {
+        viewModelScope.launch {
+            intentChannel.consumeAsFlow().collect { homeViewIntent ->
+                when (homeViewIntent) {
+                    is HomeViewIntent.FetchGenreList -> {
+                        loadGenreList(homeViewIntent.fileName)
+                    }
                 }
             }
         }
@@ -50,30 +59,18 @@ class HomeViewModel : BaseViewModel() {
     private suspend fun loadGenreList(fileName: String) = loadGenreListUseCase.loadGenreList(
         fileName = fileName,
         onError = { errorMessage ->
-            _homeViewState.postValue(HomeViewState.Error(errorMessage = errorMessage))
+            _homeViewState.value = HomeViewState.Error(errorMessage = errorMessage)
         },
         onIsLoading = { isLoading ->
             if (isLoading) {
                 getLoaders()
             }
-            _homeViewState.postValue(HomeViewState.LoadingState(isLoading = isLoading))
+            _homeViewState.value = HomeViewState.LoadingState(isLoading = isLoading)
         },
         onSuccess = { genreList ->
-            _homeViewState.postValue(HomeViewState.Genres(mapDomainToModel(genreList)))
+            _homeViewState.value = HomeViewState.Genres(mapDomainToModel(genreList))
         }
     )
-
-//    private fun handleIntent() {
-//        viewModelScope.launch {
-//            intentChannel.consumeAsFlow().collect { homeIntent ->
-//                when (homeIntent) {
-//                    is HomeViewIntent.FetchGenreList -> {
-//                        loadGenreList()
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     private fun getLoaders() = listOf(
         GenreModel(

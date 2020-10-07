@@ -3,6 +3,7 @@ package com.example.music_app.presentation.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.music_app.R
 import com.example.music_app.databinding.FragmentHomeBinding
 import com.example.music_app.presentation.adapter.GenreAdapter
@@ -11,78 +12,75 @@ import com.example.music_app.presentation.viewstate.HomeViewState
 import com.example.music_app.utils.ProgressUtils
 import com.example.music_app.utils.ViewUtils
 import com.example.music_app.utils.viewBinding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
-
-    //    private val component by lazy { HomeScreenComponent.create() }
-//    private val homeViewModel by viewModels<HomeViewModel> { component.viewModelFactory() }
+    private val homeViewModel by inject<HomeViewModel>()
     private val genreAdapter = GenreAdapter()
-    private val dep by lazy { inject<HomeViewModel>() }
 
-//    @Inject
+//    lateinit var storage: FirebaseStorage
+
+    //    @Inject
 //    lateinit var notificationCore: NotificationCore
 //
 //    @Inject
 //    lateinit var mediaPlayerCore: MediaPlayerCore
 //
 //    @Inject
-//    lateinit var storage: FirebaseStorage
-
-    //        private val homeViewModel by hiltNavViewModels<HomeViewModel>()
-    private val homeViewModel by inject<HomeViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val jsonFileString = getJsonDataFromAsset(activity?.applicationContext!!, "genre_list.json.json")
-//
-//        val gson = Gson()
-//        val genreListType = object : TypeToken<List<GenreResponse>>() {}.type
-//
-//        var genreList: List<GenreResponse> = gson.fromJson(jsonFileString, genreListType)
-//        genreList.forEachIndexed { index, genreResponse ->
-//            val result = genreResponse
-//        }
-
-//        homeViewModel.loadGenreListJson(
-//            context?.resources?.openRawResource(R.raw.genre_list)?.bufferedReader()
-//                .use { it?.readText()!! })
-
-//        setAdapter()
+        setAdapter()
         observeData()
         setIntents()
     }
 
     private fun setAdapter() {
-        binding.recyclerView.adapter = genreAdapter
+        with(binding) {
+            recyclerView.adapter = genreAdapter
+        }
     }
 
     private fun observeData() {
-        homeViewModel.homeViewState.observe(viewLifecycleOwner, { homeViewState ->
-            when (homeViewState) {
-                is HomeViewState.Error -> {
-                    ViewUtils.showSimpleErrorDialog(
-                        context = requireContext(),
-                        title = getString(R.string.error),
-                        message = homeViewState.errorMessage
-                    )
-                }
-                is HomeViewState.LoadingState -> {
-                    ProgressUtils.setLoadingState(
-                        isLoading = homeViewState.isLoading,
-                        context = requireContext()
-                    )
-                }
-                is HomeViewState.Genres -> {
-                    genreAdapter.items = homeViewState.genreList
-                }
-            }
-        })
+        homeViewModel.homeViewState.onEach {
+            handleState(it)
+        }.launchIn(lifecycleScope)
     }
 
+    private fun handleState(homeViewState: HomeViewState) = when (homeViewState) {
+        is HomeViewState.Error -> {
+//            ProgressUtils.setLoadingState(
+//                isLoading = false,
+//                context = requireContext()
+//            )
+            ViewUtils.showSimpleErrorDialog(
+                context = requireContext(),
+                title = getString(R.string.error),
+                message = homeViewState.errorMessage
+            )
+        }
+        is HomeViewState.LoadingState -> {
+            ProgressUtils.setLoadingState(
+                isLoading = homeViewState.isLoading,
+                context = requireContext()
+            )
+        }
+        is HomeViewState.Genres -> {
+//                    ProgressUtils.setLoadingState(
+//                        isLoading = false,
+//                        context = requireContext()
+//                    )
+            genreAdapter.items = homeViewState.genreList
+        }
+    }
+
+    @ExperimentalCoroutinesApi
     private fun setIntents() {
         homeViewModel.setIntent(
             HomeViewIntent.FetchGenreList(

@@ -1,19 +1,15 @@
 package com.example.music_app
 
 import android.app.Application
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import com.example.domain.di.useCaseModule
 import com.example.music_app.di.viewModelModule
 import com.example.network.di.networkModule
 import com.facebook.stetho.Stetho
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import org.koin.core.context.unloadKoinModules
 import timber.log.Timber
 
-class MusicApplication : Application(), LifecycleObserver {
+class MusicApplication : Application() {
 
     companion object {
         lateinit var sInstance: MusicApplication
@@ -70,10 +66,5 @@ class MusicApplication : Application(), LifecycleObserver {
 //            matcher.
 //        }
 //        return pattern.split(text)
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onStop() {
-        unloadKoinModules(listOf())
     }
 }
