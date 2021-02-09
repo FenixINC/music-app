@@ -26,7 +26,6 @@ class LoadGenreListUseCase {
                     onError(errorMessage)
                 }
             }
-            .buffer()
             .onCompletion { onIsLoading(false) }
             .collect {
                 onSuccess(it)
